@@ -15,7 +15,6 @@ class ViaCepService(
 ) : ClientAddressPort {
 
     private val logger = LoggerFactory.getLogger(ClientController::class.java.name)
-    private val gson = GsonBuilder().setPrettyPrinting().create()
 
     override fun getAddressClient(zipCode: String): Address {
         logger.info("Starting address search by zip code: [{}].", zipCode)
