@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  db_hexagonal:
+  db:
     image: postgres
     ports:
       - "5432:5432"
@@ -15,7 +15,7 @@ services:
     ports:
       - "16543:80"
     depends_on:
-      - db_hexagonal
+      - db
 
   wiremock:
     image: duberton/wiremock:1.0
