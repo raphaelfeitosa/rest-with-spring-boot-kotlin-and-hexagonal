@@ -1,4 +1,4 @@
-package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.exceptions.annotations
+package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.request.validation
 
 import jakarta.validation.Constraint
 import jakarta.validation.Payload
@@ -20,6 +20,6 @@ import kotlin.reflect.KClass
 @Retention(AnnotationRetention.RUNTIME)
 annotation class CPForCNPJ(
     val message: String = "This field must have a valid CPF or CNPJ format",
-    val groups: Array<KClass<*>> = [],
+    val groups: Array<KClass<Any>> = [],
     val payload: Array<KClass<Payload>> = []
 )
