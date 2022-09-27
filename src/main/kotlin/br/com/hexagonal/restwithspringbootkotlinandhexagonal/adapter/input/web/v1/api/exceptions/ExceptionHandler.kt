@@ -1,5 +1,6 @@
-package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.exceptions
+package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.exceptions
 
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.errors.Errors
 import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.http.HttpStatus
@@ -26,9 +27,34 @@ class ExceptionHandler(
         }
         return ErrorMessageResponse(
             code = HttpStatus.BAD_REQUEST.name,
-            message = "Method argument not valid",
+            message = Errors.METHOD_ARGUMENT_NOT_VALID,
             path = request.getDescription(false),
             errors = errorMessage
+        )
+    }
+
+    @ExceptionHandler(NotFoundException::class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    fun handleNotFoundException(
+        exception: NotFoundException,
+        request: WebRequest,
+    ): ErrorMessageResponse {
+        return ErrorMessageResponse(
+            code = HttpStatus.NOT_FOUND.name,
+            message = exception.message,
+            path = request.getDescription(false)
+        )
+    }
+    @ExceptionHandler(BusinessException::class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    fun handleBusinessException(
+        exception: BusinessException,
+        request: WebRequest,
+    ): ErrorMessageResponse {
+        return ErrorMessageResponse(
+            code = HttpStatus.UNPROCESSABLE_ENTITY.name,
+            message = exception.message,
+            path = request.getDescription(false)
         )
     }
 
