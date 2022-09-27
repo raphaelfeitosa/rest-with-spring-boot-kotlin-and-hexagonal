@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface ClientRepository : JpaRepository<ClientEntity, UUID>
+interface ClientRepository : JpaRepository<ClientEntity, UUID> {
+
+    fun findByDocumentNumber(documentNumber: String): Optional<ClientEntity>
+
+}

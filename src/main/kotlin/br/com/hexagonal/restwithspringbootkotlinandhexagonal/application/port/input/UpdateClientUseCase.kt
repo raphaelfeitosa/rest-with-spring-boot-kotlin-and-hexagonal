@@ -2,7 +2,7 @@ package br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.i
 
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Client
 
-interface CreateClientUseCase {
+interface UpdateClientUseCase {
 
     fun execute(client: Client): Client
 

@@ -4,6 +4,7 @@ import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.
 
 interface ClientRepositoryPort {
 
-    fun save(client: Client)
+    fun save(client: Client): Client
+    fun update(client: Client): Client
 
 }

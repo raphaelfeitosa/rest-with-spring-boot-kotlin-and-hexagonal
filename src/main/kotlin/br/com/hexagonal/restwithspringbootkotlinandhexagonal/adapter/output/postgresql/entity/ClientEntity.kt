@@ -10,7 +10,7 @@ import java.util.*
 
 @Entity
 @Table(name = "client")
-class ClientEntity(
+data class ClientEntity(
 
     @Id
     @Column(name = "id")
@@ -56,5 +56,6 @@ class ClientEntity(
     var createdAt: LocalDateTime? = null,
 
     @Column(name = "updated_at")
-    var updatedAt: LocalDateTime = LocalDateTime.now(),
+    var updatedAt: LocalDateTime? = null
+
 )
