@@ -5,13 +5,12 @@ import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feig
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.converter.toDomain
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Address
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.output.ClientAddressPort
-import com.google.gson.GsonBuilder
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
 class ViaCepService(
-    private val viaCep: ViaCep
+    private val viaCep: ViaCep,
 ) : ClientAddressPort {
 
     private val logger = LoggerFactory.getLogger(ClientController::class.java.name)
@@ -20,12 +19,14 @@ class ViaCepService(
         logger.info("Starting address search by zip code: [{}].", zipCode)
 
         try {
-            val response = viaCep.findAddressByZipCode(zipCode).toDomain()
-            logger.info("Done address search. Address: [{}]", response)
-            return response
+            return viaCep.findAddressByZipCode(zipCode)
+                .toDomain()
+                .also {
+                    logger.info("Done address search. Address: [{}]", it)
+                }
         } catch (exception: Exception) {
             logger.error("Error searching address by zip code: [{}]", zipCode)
-            throw exception
+            throw Exception()
         }
     }
 }
