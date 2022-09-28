@@ -22,23 +22,22 @@ class ClientRepositoryService(
     private val logger = LoggerFactory.getLogger(ClientRepositoryService::class.java.name)
 
     override fun save(client: Client): Client {
-        logger.info("Starting process to save a client: [{}] in DB.", client)
+        logger.info("Starting process to save a client: [{}], in DB.", client)
         return clientRepository.save(
             client.toEntity()
         ).also {
-            logger.info("Done process to save a client: [{}]", it)
+            logger.info("Done process to save a client: [{}] $it, in DB")
         }.toDomain()
 
     }
 
     override fun update(client: Client): Client {
-        logger.info("Starting process to update a client with clientId: [{}] in DB.", client.id)
+        logger.info("Starting process to update a client with clientId: [{}], in DB.", client.id)
         val entity = getClientById(client.id)
-
         return clientRepository.save(
             client.toUpdateEntity(entity)
         ).also {
-            logger.info("Done process to update a client: [{}]", it)
+            logger.info("Done process to update a client: [{}] $it, in DB")
         }.toDomain()
     }
 
@@ -51,14 +50,23 @@ class ClientRepositoryService(
     }
 
     override fun findById(clientId: UUID): Client {
-        logger.info("Starting process to find a client with clientId: [{}] in DB.", clientId)
+        logger.info("Starting process to find a client with clientId: [{}], in DB.", clientId)
         return getClientById(clientId)
             .also {
-                logger.info("Done process to find a client: [{}].", it)
+                logger.info("Done process to find a client: [{}] $it, in DB")
             }.toDomain()
+    }
+
+    override fun delete(clientId: UUID) {
+        logger.info("Starting process to delete a client with clientId: [{}], in DB.", clientId)
+        val entity = getClientById(clientId)
+        clientRepository.delete(entity).also {
+            logger.info("Done process to delete a client: [{}] $entity, in DB")
+        }
     }
 
     private fun getClientById(clientId: UUID): ClientEntity =
         clientRepository.findById(clientId).map { it }
             .orElseThrow { NotFoundException(RESOURCE_NOT_FOUND) }
+
 }

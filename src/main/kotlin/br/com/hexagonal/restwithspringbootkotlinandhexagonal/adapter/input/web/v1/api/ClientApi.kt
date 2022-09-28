@@ -5,8 +5,7 @@ import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.response.ClientResponse
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
-import org.springframework.http.HttpStatus.CREATED
-import org.springframework.http.HttpStatus.OK
+import org.springframework.http.HttpStatus.*
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -21,7 +20,7 @@ interface ClientApi {
     @ResponseStatus(OK)
     @PutMapping("/{clientId}", consumes = [APPLICATION_JSON_VALUE])
     fun update(
-        @PathVariable(required = true) clientId: UUID,
+        @PathVariable(required = true) @NotBlank clientId: UUID,
         @Valid @RequestBody updateClientRequest: UpdateClientRequest,
     ): ClientResponse
 
@@ -34,4 +33,8 @@ interface ClientApi {
     @ResponseStatus(OK)
     @GetMapping(consumes = [APPLICATION_JSON_VALUE])
     fun findAll(): List<ClientResponse>
+
+    @ResponseStatus(NO_CONTENT)
+    @DeleteMapping("/{clientId}", consumes = [APPLICATION_JSON_VALUE])
+    fun delete(@PathVariable(required = true) @NotBlank clientId: UUID)
 }

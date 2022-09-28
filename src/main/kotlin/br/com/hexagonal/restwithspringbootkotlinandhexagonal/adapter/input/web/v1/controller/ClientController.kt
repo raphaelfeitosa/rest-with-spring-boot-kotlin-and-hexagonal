@@ -7,6 +7,7 @@ import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.converter.toDomain
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.converter.toResponse
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.input.CreateClientUseCase
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.input.DeleteClientUseCase
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.input.FindClientUseCase
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.input.UpdateClientUseCase
 import org.slf4j.LoggerFactory
@@ -17,7 +18,8 @@ import java.util.*
 class ClientController(
     private val createClientUseCase: CreateClientUseCase,
     private val updateClientUseCase: UpdateClientUseCase,
-    private val findClientUseCase: FindClientUseCase
+    private val findClientUseCase: FindClientUseCase,
+    private val deleteClientUseCase: DeleteClientUseCase
 ) : ClientApi {
 
     private val logger = LoggerFactory.getLogger(ClientController::class.java.name)
@@ -55,6 +57,13 @@ class ClientController(
         return findClientUseCase.execute().also {
             logger.info("Done find all clients.")
         }.toResponse()
+    }
+
+    override fun delete(clientId: UUID) {
+        logger.info("Request received to delete a client with clientId: [{}]...", clientId)
+        deleteClientUseCase.execute(clientId).also {
+            logger.info("Client successfully deleted")
+        }
     }
 
 }
