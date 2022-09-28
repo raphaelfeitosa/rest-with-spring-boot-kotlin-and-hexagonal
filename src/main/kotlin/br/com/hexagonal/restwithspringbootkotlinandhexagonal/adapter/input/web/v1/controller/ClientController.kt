@@ -50,4 +50,11 @@ class ClientController(
         }.toResponse()
     }
 
+    override fun findAll(): List<ClientResponse> {
+        logger.info("Request received to find all clients.")
+        return findClientUseCase.execute().also {
+            logger.info("Done find all clients.")
+        }.toResponse()
+    }
+
 }

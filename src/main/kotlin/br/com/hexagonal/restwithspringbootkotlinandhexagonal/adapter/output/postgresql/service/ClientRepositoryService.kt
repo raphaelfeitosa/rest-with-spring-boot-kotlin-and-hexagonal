@@ -42,13 +42,20 @@ class ClientRepositoryService(
         }.toDomain()
     }
 
+    override fun findAll(): List<Client> {
+        logger.info("Starting process to find find all clients in DB.")
+        return clientRepository.findAll()
+            .also {
+                logger.info("Done process to find all clients in DB.")
+            }.map { it.toDomain() }
+    }
+
     override fun findById(clientId: UUID): Client {
         logger.info("Starting process to find a client with clientId: [{}] in DB.", clientId)
         return getClientById(clientId)
             .also {
                 logger.info("Done process to find a client: [{}].", it)
             }.toDomain()
-
     }
 
     private fun getClientById(clientId: UUID): ClientEntity =

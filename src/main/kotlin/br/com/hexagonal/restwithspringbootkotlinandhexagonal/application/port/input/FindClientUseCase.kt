@@ -5,6 +5,7 @@ import java.util.*
 
 interface FindClientUseCase {
 
+    fun execute(): List<Client>
     fun execute(clientId: UUID): Client
 
 }

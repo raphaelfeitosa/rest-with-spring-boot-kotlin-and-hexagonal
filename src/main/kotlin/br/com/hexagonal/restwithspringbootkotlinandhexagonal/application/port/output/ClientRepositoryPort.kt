@@ -7,6 +7,7 @@ interface ClientRepositoryPort {
 
     fun save(client: Client): Client
     fun update(client: Client): Client
+    fun findAll(): List<Client>
     fun findById(clientId: UUID): Client
 
 }

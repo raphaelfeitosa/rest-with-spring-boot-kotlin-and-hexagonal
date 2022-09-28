@@ -24,3 +24,6 @@ fun Client.toResponse() = ClientResponse(
         number = this.address.number!!,
     )
 )
+
+fun List<Client>.toResponse(): List<ClientResponse> =
+    this.map { it.toResponse() }

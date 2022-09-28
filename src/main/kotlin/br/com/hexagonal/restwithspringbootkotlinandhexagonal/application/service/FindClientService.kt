@@ -13,6 +13,12 @@ class FindClientService(
 ) : FindClientUseCase {
 
     private val logger = LoggerFactory.getLogger(FindClientUseCase::class.java.name)
+    override fun execute(): List<Client> {
+        logger.info("Starting service to find all clients.")
+        return clientRepositoryPort.findAll().also {
+            logger.info("Done service to find all clients.")
+        }
+    }
 
     override fun execute(clientId: UUID): Client {
         logger.info("Starting service to find a client by clientId: [{}].", clientId)

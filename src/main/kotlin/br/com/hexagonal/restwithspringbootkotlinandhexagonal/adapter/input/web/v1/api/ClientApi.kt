@@ -22,7 +22,7 @@ interface ClientApi {
     @PutMapping("/{clientId}", consumes = [APPLICATION_JSON_VALUE])
     fun update(
         @PathVariable(required = true) clientId: UUID,
-        @Valid @RequestBody updateClientRequest: UpdateClientRequest
+        @Valid @RequestBody updateClientRequest: UpdateClientRequest,
     ): ClientResponse
 
     @ResponseStatus(OK)
@@ -31,4 +31,7 @@ interface ClientApi {
         @PathVariable(required = true) @NotBlank clientId: UUID,
     ): ClientResponse
 
+    @ResponseStatus(OK)
+    @GetMapping(consumes = [APPLICATION_JSON_VALUE])
+    fun findAll(): List<ClientResponse>
 }
