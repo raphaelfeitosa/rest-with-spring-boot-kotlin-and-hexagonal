@@ -7,6 +7,7 @@ import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.converter.toDomain
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.converter.toResponse
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.input.CreateClientUseCase
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.input.FindClientUseCase
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.input.UpdateClientUseCase
 import org.slf4j.LoggerFactory
 import org.springframework.web.bind.annotation.RestController
@@ -16,6 +17,7 @@ import java.util.*
 class ClientController(
     private val createClientUseCase: CreateClientUseCase,
     private val updateClientUseCase: UpdateClientUseCase,
+    private val findClientUseCase: FindClientUseCase
 ) : ClientApi {
 
     private val logger = LoggerFactory.getLogger(ClientController::class.java.name)
@@ -38,6 +40,13 @@ class ClientController(
             client = updateClientRequest.toDomain(clientId)
         ).also {
             logger.info("Client with clientId: [{}] updated.", it.id)
+        }.toResponse()
+    }
+
+    override fun findById(clientId: UUID): ClientResponse {
+        logger.info("Request received to find client with clientId: [{}]...", clientId)
+        return findClientUseCase.execute(clientId).also {
+            logger.info("Client found: [{}].", it)
         }.toResponse()
     }
 

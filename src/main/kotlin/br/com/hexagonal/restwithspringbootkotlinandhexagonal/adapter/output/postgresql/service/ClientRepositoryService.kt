@@ -43,6 +43,15 @@ class ClientRepositoryService(
         }.toDomain()
     }
 
+    override fun findById(clientId: UUID): Client {
+        logger.info("Starting process to find a client with clientId: [{}] in DB.", clientId)
+        return getClientById(clientId)
+            .also {
+                logger.info("Done process to find a client: [{}].", it)
+            }.toDomain()
+
+    }
+
     private fun getClientById(clientId: UUID): ClientEntity =
         clientRepository.findById(clientId)
             .orElseThrow { NotFoundException(RESOURCE_NOT_FOUND) }
