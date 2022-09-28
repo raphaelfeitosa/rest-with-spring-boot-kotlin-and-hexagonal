@@ -2,7 +2,6 @@ package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.pos
 
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.errors.Errors.RESOURCE_NOT_FOUND
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.exceptions.NotFoundException
-import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.controller.ClientController
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.postgresql.converter.toDomain
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.postgresql.converter.toEntity
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.postgresql.converter.toUpdateEntity
@@ -20,7 +19,7 @@ class ClientRepositoryService(
     private val clientRepository: ClientRepository,
 ) : ClientRepositoryPort {
 
-    private val logger = LoggerFactory.getLogger(ClientController::class.java.name)
+    private val logger = LoggerFactory.getLogger(ClientRepositoryService::class.java.name)
 
     override fun save(client: Client): Client {
         logger.info("Starting process to save a client: [{}] in DB.", client)

@@ -1,6 +1,5 @@
 package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.service
 
-import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.controller.ClientController
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.client.ViaCep
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.converter.toDomain
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Address
@@ -13,7 +12,7 @@ class ViaCepService(
     private val viaCep: ViaCep,
 ) : ClientAddressPort {
 
-    private val logger = LoggerFactory.getLogger(ClientController::class.java.name)
+    private val logger = LoggerFactory.getLogger(ViaCepService::class.java.name)
 
     override fun getAddressClient(zipCode: String): Address {
         logger.info("Starting address search by zip code: [{}].", zipCode)
