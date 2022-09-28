@@ -59,6 +59,6 @@ class ClientRepositoryService(
     }
 
     private fun getClientById(clientId: UUID): ClientEntity =
-        clientRepository.findById(clientId)
+        clientRepository.findById(clientId).map { it }
             .orElseThrow { NotFoundException(RESOURCE_NOT_FOUND) }
 }
