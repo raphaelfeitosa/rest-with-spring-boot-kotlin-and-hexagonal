@@ -3,6 +3,9 @@ package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.request.CreateClientRequest
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.request.UpdateClientRequest
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.response.ClientResponse
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.utils.MediaType.APPLICATION_JSON
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.utils.MediaType.APPLICATION_XML
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.utils.MediaType.APPLICATION_YAML
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
 import org.springframework.http.HttpStatus.*
@@ -14,27 +17,40 @@ import java.util.*
 interface ClientApi {
 
     @ResponseStatus(CREATED)
-    @PostMapping(consumes = [APPLICATION_JSON_VALUE])
+    @PostMapping(
+        consumes = [APPLICATION_JSON, APPLICATION_XML, APPLICATION_YAML],
+        produces = [APPLICATION_JSON, APPLICATION_XML, APPLICATION_YAML]
+    )
     fun create(@Valid @RequestBody createClientRequest: CreateClientRequest): ClientResponse
 
     @ResponseStatus(OK)
-    @PutMapping("/{clientId}", consumes = [APPLICATION_JSON_VALUE])
+    @PutMapping(
+        "/{clientId}",
+        consumes = [APPLICATION_JSON, APPLICATION_XML, APPLICATION_YAML],
+        produces = [APPLICATION_JSON, APPLICATION_XML, APPLICATION_YAML]
+    )
     fun update(
         @PathVariable(required = true) @NotBlank clientId: UUID,
         @Valid @RequestBody updateClientRequest: UpdateClientRequest,
     ): ClientResponse
 
     @ResponseStatus(OK)
-    @GetMapping("/{clientId}", consumes = [APPLICATION_JSON_VALUE])
+    @GetMapping(
+        "/{clientId}",
+        produces = [APPLICATION_JSON, APPLICATION_XML, APPLICATION_YAML]
+    )
     fun findById(
         @PathVariable(required = true) @NotBlank clientId: UUID,
     ): ClientResponse
 
     @ResponseStatus(OK)
-    @GetMapping(consumes = [APPLICATION_JSON_VALUE])
+    @GetMapping(produces = [APPLICATION_JSON, APPLICATION_XML, APPLICATION_YAML])
     fun findAll(): List<ClientResponse>
 
     @ResponseStatus(NO_CONTENT)
-    @DeleteMapping("/{clientId}", consumes = [APPLICATION_JSON_VALUE])
+    @DeleteMapping(
+        "/{clientId}",
+        produces = [APPLICATION_JSON, APPLICATION_XML, APPLICATION_YAML]
+    )
     fun delete(@PathVariable(required = true) @NotBlank clientId: UUID)
 }
