@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable
 )
 interface ViaCep {
 
-    @GetMapping("/{zipCode}/json", consumes = [APPLICATION_JSON_VALUE])
+    @GetMapping("/ws/{zipCode}/json", consumes = [APPLICATION_JSON_VALUE])
     fun findAddressByZipCode(
         @PathVariable("zipCode", required = true) zipCode: String
     ): ViaCepResponse

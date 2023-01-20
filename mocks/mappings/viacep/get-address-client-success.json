@@ -1,0 +1,20 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/ws/68040520/json"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "viacep/get-address-client-success.json",
+    "transformers": [
+      "json-body-transformer"
+    ],
+    "transformerParameters": {
+      "urlRegex": "/68040520/json"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "logradouro": "Street {{randomValue length=10 type=ALPHABETIC}}",
+  "bairro": "district {{randomValue length=10 type=ALPHABETIC}}",
+  "localidade": "city {{randomValue length=10 type=ALPHABETIC}}",
+  "uf": "{{randomValue length=2 type=ALPHABETIC}}"
+}
