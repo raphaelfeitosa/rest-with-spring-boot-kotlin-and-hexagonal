@@ -26,8 +26,10 @@ fun Client.toResponse() = ClientResponse(
             zipCode = this.zipCode!!,
             number = this.number!!,
         )
-    }
-
+    },
+    additionalInformation = this.additionalInformation,
+    createdAt = this.createdAt,
+    updatedAt = this.updatedAt
 )
 
 fun List<Client>.toResponse(): List<ClientResponse> =

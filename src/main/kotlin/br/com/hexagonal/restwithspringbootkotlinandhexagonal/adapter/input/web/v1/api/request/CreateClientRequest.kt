@@ -19,7 +19,8 @@ data class CreateClientRequest(
     @field:[NotNull
     DecimalMin(value = "0.01", inclusive = true)
     Digits(integer = 15, fraction = 2)] val salary: BigDecimal?,
-    @field:[NotNull Valid] val address: Address?
+    @field:[NotNull Valid] val address: Address?,
+    val additionalInformation: Map<String, String>? = mapOf()
 ) {
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)

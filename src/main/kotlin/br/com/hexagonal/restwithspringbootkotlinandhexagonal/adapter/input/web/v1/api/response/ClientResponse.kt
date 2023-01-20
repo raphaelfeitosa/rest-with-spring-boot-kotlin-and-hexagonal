@@ -3,6 +3,7 @@ package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import java.math.BigDecimal
+import java.time.LocalDateTime
 import java.util.*
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)
@@ -13,7 +14,10 @@ data class ClientResponse(
     val email: String,
     val document: Document,
     val salary: BigDecimal,
-    val address: Address
+    val address: Address,
+    val additionalInformation: Map<String, String>?,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime
 ) {
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy::class)

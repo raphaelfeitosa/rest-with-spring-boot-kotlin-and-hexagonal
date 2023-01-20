@@ -3,6 +3,7 @@ package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.pos
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.postgresql.entity.ClientEntity
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Address
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Client
+import com.fasterxml.jackson.databind.ObjectMapper
 
 fun Client.toEntity() = ClientEntity(
     id = this.id,
@@ -18,6 +19,7 @@ fun Client.toEntity() = ClientEntity(
     state = this.address.state!!,
     zipCode = this.address.zipCode!!,
     number = this.address.number!!,
+    additionalInformation = this.additionalInformation!!.objectToJson(),
     createdAt = this.createdAt,
     updatedAt = this.updatedAt
 )
@@ -29,6 +31,7 @@ fun Client.toUpdateEntity(entity: ClientEntity): ClientEntity {
     entity.documentNumber = this.document.number
     entity.documentType = this.document.type.name
     entity.salary = this.salary
+    entity.additionalInformation = this.additionalInformation!!.objectToJson()
     entity.updatedAt = this.updatedAt
 
     return entity
@@ -53,6 +56,12 @@ fun ClientEntity.toDomain() =
             zipCode = this.zipCode,
             number = this.number,
         ),
+        additionalInformation = this.additionalInformation!!.stringToMap(),
         createdAt = this.createdAt!!,
         updatedAt = this.updatedAt!!
     )
+
+private fun String.stringToMap() =
+    ObjectMapper().readValue(this, Map::class.java) as Map<String, String>?
+
+private fun Map<String, String>.objectToJson() = ObjectMapper().writeValueAsString(this)

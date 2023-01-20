@@ -52,6 +52,9 @@ data class ClientEntity(
     @Column(name = "number")
     var number: String? = null,
 
+    @Column(name = "additional_information")
+    var additionalInformation: String? = null,
+
     @Column(name = "created_at")
     var createdAt: LocalDateTime? = null,
 

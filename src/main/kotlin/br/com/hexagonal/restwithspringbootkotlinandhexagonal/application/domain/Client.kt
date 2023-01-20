@@ -13,6 +13,7 @@ data class Client(
     val document: Document,
     val salary: BigDecimal,
     val address: Address? = null,
+    val additionalInformation: Map<String, String>?,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime = LocalDateTime.now()
 ) {

@@ -21,7 +21,8 @@ fun CreateClientRequest.toDomain() = Client(
             zipCode = this.zipCode!!,
             number = this.number!!
         )
-    }
+    },
+    additionalInformation = this.additionalInformation
 )
 
 fun UpdateClientRequest.toDomain(clientId: UUID) = Client(
@@ -33,5 +34,6 @@ fun UpdateClientRequest.toDomain(clientId: UUID) = Client(
         number = this.documentNumber!!,
         type = enumValueOf(this.documentType!!)
     ),
-    salary = this.salary!!
+    salary = this.salary!!,
+    additionalInformation = this.additionalInformation
 )

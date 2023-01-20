@@ -16,5 +16,6 @@ data class UpdateClientRequest(
     @field:[NotNull Pattern(regexp = "CPF")] val documentType: String?,
     @field:[NotNull
     DecimalMin(value = "0.01", inclusive = true)
-    Digits(integer = 15, fraction = 2)] val salary: BigDecimal?
+    Digits(integer = 15, fraction = 2)] val salary: BigDecimal?,
+    val additionalInformation: Map<String, String>? = mapOf()
 )
