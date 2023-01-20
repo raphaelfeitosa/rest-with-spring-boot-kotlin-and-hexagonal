@@ -10,19 +10,24 @@ fun Client.toResponse() = ClientResponse(
     name = this.name,
     gender = this.gender,
     email = this.email,
-    document = Document(
-        documentNumber = this.document.number,
-        documentType = this.document.type.name
-    ),
+    document = with(this.document) {
+        Document(
+            documentNumber = this.number,
+            documentType = this.type.name
+        )
+    },
     salary = this.salary,
-    address = ClientResponse.Address(
-        street = this.address!!.street!!,
-        district = this.address.district!!,
-        city = this.address.city!!,
-        state = this.address.state!!,
-        zipCode = this.address.zipCode!!,
-        number = this.address.number!!,
-    )
+    address = with(this.address!!) {
+        ClientResponse.Address(
+            street = this.street!!,
+            district = this.district!!,
+            city = this.city!!,
+            state = this.state!!,
+            zipCode = this.zipCode!!,
+            number = this.number!!,
+        )
+    }
+
 )
 
 fun List<Client>.toResponse(): List<ClientResponse> =

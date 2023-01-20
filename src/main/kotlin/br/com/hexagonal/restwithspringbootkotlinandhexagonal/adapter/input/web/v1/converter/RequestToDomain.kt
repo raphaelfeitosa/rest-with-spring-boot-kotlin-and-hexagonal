@@ -16,10 +16,12 @@ fun CreateClientRequest.toDomain() = Client(
         type = enumValueOf(this.documentType!!)
     ),
     salary = this.salary!!,
-    address = Address(
-        zipCode = this.address!!.zipCode!!,
-        number = this.address.number!!
-    )
+    address = with(this.address!!) {
+        Address(
+            zipCode = this.zipCode!!,
+            number = this.number!!
+        )
+    }
 )
 
 fun UpdateClientRequest.toDomain(clientId: UUID) = Client(
