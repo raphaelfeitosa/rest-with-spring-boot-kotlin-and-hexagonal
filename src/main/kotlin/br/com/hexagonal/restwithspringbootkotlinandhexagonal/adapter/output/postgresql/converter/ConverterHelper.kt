@@ -39,15 +39,15 @@ fun Client.toUpdateEntity(entity: ClientEntity): ClientEntity {
 
 fun ClientEntity.toDomain() =
     Client(
-        id = this.id!!,
-        name = this.name!!,
-        gender = this.gender!!,
-        email = this.email!!,
+        id = this.id,
+        name = this.name,
+        gender = this.gender,
+        email = this.email,
         document = Client.Document(
-            number = this.documentNumber!!,
-            type = enumValueOf(this.documentType!!)
+            number = this.documentNumber,
+            type = enumValueOf(this.documentType)
         ),
-        salary = this.salary!!,
+        salary = this.salary,
         address = Address(
             street = this.street,
             district = this.district,
@@ -57,7 +57,7 @@ fun ClientEntity.toDomain() =
             number = this.number,
         ),
         additionalInformation = this.additionalInformation!!.stringToMap(),
-        createdAt = this.createdAt!!,
+        createdAt = this.createdAt,
         updatedAt = this.updatedAt!!
     )
 

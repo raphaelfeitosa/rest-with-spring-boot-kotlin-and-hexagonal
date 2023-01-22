@@ -10,55 +10,55 @@ import java.util.*
 
 @Entity
 @Table(name = "client")
-data class ClientEntity(
+class ClientEntity(
 
     @Id
     @Column(name = "id")
-    var id: UUID? = null,
+    var id: UUID,
 
     @Column(name = "name")
-    var name: String? = null,
+    var name: String,
 
     @Column(name = "gender")
-    var gender: String? = null,
+    var gender: String,
 
     @Column(name = "email")
-    var email: String? = null,
+    var email: String,
 
     @Column(name = "document_number")
-    var documentNumber: String? = null,
+    var documentNumber: String,
 
     @Column(name = "document_type")
-    var documentType: String? = null,
+    var documentType: String,
 
     @Column(name = "salary")
-    var salary: BigDecimal? = null,
+    var salary: BigDecimal,
 
     @Column(name = "street")
-    var street: String? = null,
+    var street: String,
 
     @Column(name = "district")
-    var district: String? = null,
+    var district: String,
 
     @Column(name = "city")
-    var city: String? = null,
+    var city: String,
 
     @Column(name = "state")
-    var state: String? = null,
+    var state: String,
 
     @Column(name = "zip_code")
-    var zipCode: String? = null,
+    var zipCode: String,
 
     @Column(name = "number")
-    var number: String? = null,
+    var number: String,
 
     @Column(name = "additional_information")
-    var additionalInformation: String? = null,
+    var additionalInformation: String?,
 
     @Column(name = "created_at")
-    var createdAt: LocalDateTime? = null,
+    var createdAt: LocalDateTime,
 
     @Column(name = "updated_at")
-    var updatedAt: LocalDateTime? = null
+    var updatedAt: LocalDateTime? = LocalDateTime.now()
 
 )

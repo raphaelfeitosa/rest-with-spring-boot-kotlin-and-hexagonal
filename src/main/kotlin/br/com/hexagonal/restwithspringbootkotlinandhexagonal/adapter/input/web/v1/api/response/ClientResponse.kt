@@ -1,5 +1,7 @@
 package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.response
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY
 import com.fasterxml.jackson.databind.PropertyNamingStrategies
 import com.fasterxml.jackson.databind.annotation.JsonNaming
 import java.math.BigDecimal
@@ -15,7 +17,8 @@ data class ClientResponse(
     val document: Document,
     val salary: BigDecimal,
     val address: Address,
-    val additionalInformation: Map<String, String>?,
+    @JsonInclude(value = NON_EMPTY)
+    val additionalInformation: Map<String, String>,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime
 ) {
