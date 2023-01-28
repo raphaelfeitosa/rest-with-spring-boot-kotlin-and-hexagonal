@@ -27,7 +27,7 @@ fun Client.toResponse() = ClientResponse(
             number = this.number!!,
         )
     },
-    additionalInformation = this.additionalInformation,
+    additionalInformation = this.additionalInformation!!,
     createdAt = this.createdAt,
     updatedAt = this.updatedAt
 )
