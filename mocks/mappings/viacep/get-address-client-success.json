@@ -11,7 +11,7 @@
       "json-body-transformer"
     ],
     "transformerParameters": {
-      "urlRegex": "/68040520/json"
+      "urlRegex": "/ws/68040520/json"
     },
     "headers": {
       "Content-Type": "application/json"
