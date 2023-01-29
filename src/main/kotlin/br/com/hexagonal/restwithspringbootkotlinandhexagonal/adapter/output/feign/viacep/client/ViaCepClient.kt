@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable
     name = "via-cep",
     url = "\${api-via-cep.url}"
 )
-interface ViaCep {
+interface ViaCepClient {
 
     @GetMapping("/ws/{zipCode}/json", consumes = [APPLICATION_JSON_VALUE])
     fun findAddressByZipCode(

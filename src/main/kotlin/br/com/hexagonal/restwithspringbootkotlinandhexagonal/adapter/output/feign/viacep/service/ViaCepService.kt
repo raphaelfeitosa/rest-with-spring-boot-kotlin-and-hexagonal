@@ -1,6 +1,6 @@
 package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.service
 
-import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.client.ViaCep
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.client.ViaCepClient
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.converter.toDomain
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Address
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.errors.DomainErrors.INVALID_CEP_INTEGRATION
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class ViaCepService(
-    private val viaCep: ViaCep
+    private val viaCepClient: ViaCepClient
 ) : ClientAddressPort {
 
     private val logger = LoggerFactory.getLogger(ViaCepService::class.java.name)
@@ -20,7 +20,7 @@ class ViaCepService(
         logger.info("Starting address search by zip code: [{}].", zipCode)
 
         try {
-            return viaCep.findAddressByZipCode(zipCode)
+            return viaCepClient.findAddressByZipCode(zipCode)
                 .toDomain()
                 .also {
                     logger.info("Done address search. Address: [{}]", it)
