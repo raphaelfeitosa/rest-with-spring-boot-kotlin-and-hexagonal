@@ -1,8 +1,6 @@
 package br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.service
 
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Client
-import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.errors.DomainErrors.INVALID_CEP_INTEGRATION
-import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.exceptions.ViaCepPortException
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.input.CreateClientUseCase
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.output.ClientAddressPort
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.output.ClientRepositoryPort
@@ -19,14 +17,9 @@ class CreateClientService(
 
     override fun execute(client: Client): Client {
         logger.info("Starting service to create a client.")
-
-        try {
-            clientAddressPort.getAddressClient(client.address!!.zipCode!!).toClientAddress(client)
-            return client.save(clientRepositoryPort).also {
-                logger.info("Done service to create a client.")
-            }
-        } catch (exception: Exception) {
-            throw ViaCepPortException(INVALID_CEP_INTEGRATION)
+        clientAddressPort.getAddressClient(client.address!!.zipCode!!).toClientAddress(client)
+        return client.save(clientRepositoryPort).also {
+            logger.info("Done service to create a client.")
         }
     }
 
