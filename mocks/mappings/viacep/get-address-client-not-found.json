@@ -1,0 +1,20 @@
+{
+  "priority": 2,
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/ws/68040523/json"
+  },
+  "response": {
+    "status": 404,
+    "bodyFileName": "viacep/get-address-client-not-found.json",
+    "transformers": [
+      "json-body-transformer"
+    ],
+    "transformerParameters": {
+      "urlRegex": "/ws/68040523/json"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
