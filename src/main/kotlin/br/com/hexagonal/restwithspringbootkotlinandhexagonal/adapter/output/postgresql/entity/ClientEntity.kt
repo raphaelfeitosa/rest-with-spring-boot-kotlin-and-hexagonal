@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 @Entity
-@Table(name = "client")
+@Table(name = "tb_clients")
 class ClientEntity(
 
     @Id
