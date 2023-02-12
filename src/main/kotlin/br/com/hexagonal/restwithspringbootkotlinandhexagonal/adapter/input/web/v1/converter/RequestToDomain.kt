@@ -2,7 +2,7 @@ package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.
 
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.request.CreateClientRequest
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.request.UpdateClientRequest
-import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Address
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Client.Address
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Client
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Client.Document
 import java.util.*
@@ -16,12 +16,12 @@ fun CreateClientRequest.toDomain() = Client(
         type = enumValueOf(this.documentType!!)
     ),
     salary = this.salary!!,
-    address = with(this.address!!) {
+    address = this.address!!.map {
         Address(
-            zipCode = this.zipCode!!,
-            number = this.number!!
+            zipCode = it.zipCode!!,
+            number = it.number!!
         )
-    },
+    }.toSet(),
     additionalInformation = this.additionalInformation
 )
 

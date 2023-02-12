@@ -23,45 +23,46 @@ class ClientRepositoryService(
 
     override fun save(client: Client): Client {
         logger.info("Starting process to save a client: [{}], in DB.", client)
-        return clientRepository.save(
-            client.toEntity()
-        ).also {
-            logger.info("Done process to save a client: [{}] $it, in DB")
-        }.toDomain()
-
+        return clientRepository.save(client.toEntity())
+            .toDomain()
+            .also {
+                logger.info("Done process to save a client: [{}], in DB", it)
+            }
     }
 
     override fun update(client: Client): Client {
         logger.info("Starting process to update a client with clientId: [{}], in DB.", client.id)
         val entity = getClientById(client.id)
-        return clientRepository.save(
-            client.toUpdateEntity(entity)
-        ).also {
-            logger.info("Done process to update a client: [{}] $it, in DB")
-        }.toDomain()
+        return clientRepository.save(client.toUpdateEntity(entity))
+            .toDomain()
+            .also {
+                logger.info("Done process to update a client: [{}], in DB", it)
+            }
     }
 
     override fun findAll(): List<Client> {
         logger.info("Starting process to find find all clients in DB.")
         return clientRepository.findAll()
+            .map { it.toDomain() }
             .also {
                 logger.info("Done process to find all clients in DB.")
-            }.map { it.toDomain() }
+            }
     }
 
     override fun findById(clientId: UUID): Client {
         logger.info("Starting process to find a client with clientId: [{}], in DB.", clientId)
         return getClientById(clientId)
+            .toDomain()
             .also {
-                logger.info("Done process to find a client: [{}] $it, in DB")
-            }.toDomain()
+                logger.info("Done process to find a client: [{}], in DB", it)
+            }
     }
 
     override fun delete(clientId: UUID) {
         logger.info("Starting process to delete a client with clientId: [{}], in DB.", clientId)
         val entity = getClientById(clientId)
         clientRepository.delete(entity).also {
-            logger.info("Done process to delete a client: [{}] $entity, in DB")
+            logger.info("Done process to delete a client: [{}], in DB", entity)
         }
     }
 

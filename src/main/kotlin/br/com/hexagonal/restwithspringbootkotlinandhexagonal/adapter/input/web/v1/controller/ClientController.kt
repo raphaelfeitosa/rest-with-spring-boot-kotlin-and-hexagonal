@@ -25,7 +25,7 @@ class ClientController(
     private val logger = LoggerFactory.getLogger(ClientController::class.java.name)
 
     override fun create(createClientRequest: CreateClientRequest): ClientResponse {
-        logger.info("Request received to create a new client: [{}]...", createClientRequest)
+        logger.info("Request received to create a new client: [{}].", createClientRequest)
         return createClientUseCase.execute(
             createClientRequest.toDomain()
         ).also {
@@ -35,7 +35,7 @@ class ClientController(
 
     override fun update(clientId: UUID, updateClientRequest: UpdateClientRequest): ClientResponse {
         logger.info(
-            "Request received to update a client: [{}] with clientId: [{}]...",
+            "Request received to update a client: [{}] with clientId: [{}].",
             updateClientRequest, clientId
         )
         return updateClientUseCase.execute(
@@ -46,7 +46,7 @@ class ClientController(
     }
 
     override fun findById(clientId: UUID): ClientResponse {
-        logger.info("Request received to find client with clientId: [{}]...", clientId)
+        logger.info("Request received to find client with clientId: [{}].", clientId)
         return findClientUseCase.execute(clientId).also {
             logger.info("Client found: [{}].", it)
         }.toResponse()
@@ -60,9 +60,9 @@ class ClientController(
     }
 
     override fun delete(clientId: UUID) {
-        logger.info("Request received to delete a client with clientId: [{}]...", clientId)
+        logger.info("Request received to delete a client with clientId: [{}].", clientId)
         deleteClientUseCase.execute(clientId).also {
-            logger.info("Client successfully deleted")
+            logger.info("Client successfully deleted.")
         }
     }
 

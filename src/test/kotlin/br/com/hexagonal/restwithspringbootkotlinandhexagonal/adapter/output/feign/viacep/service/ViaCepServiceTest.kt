@@ -1,9 +1,9 @@
 package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.service
 
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.errors.Errors
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.client.ViaCepClient
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.response.ViaCepResponse
-import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.errors.DomainErrors.INVALID_CEP_INTEGRATION
-import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.exceptions.ViaCepPortException
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.exceptions.ViaCepPortException
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.output.ClientAddressPort
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.helper.dummyObject
 import org.junit.jupiter.api.BeforeEach
@@ -41,7 +41,7 @@ class ViaCepServiceTest {
         whenever(viaCepClient.findAddressByZipCode(any())).thenThrow(ViaCepPortException::class.java)
         val exception = assertThrows<ViaCepPortException> { clientAddressPort.getAddressClient(dummyObject()) }
 
-        assertEquals(INVALID_CEP_INTEGRATION, exception.message)
+        assertEquals(Errors.invalidCepIntegration(dummyObject()), exception.message)
         verify(viaCepClient, only()).findAddressByZipCode(any())
     }
 }

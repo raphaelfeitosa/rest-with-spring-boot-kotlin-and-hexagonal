@@ -1,9 +1,11 @@
 package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.postgresql.entity
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import com.fasterxml.jackson.annotation.JsonManagedReference
+import jakarta.persistence.*
+import jakarta.persistence.CascadeType.ALL
+import jakarta.persistence.CascadeType.REMOVE
+import jakarta.persistence.FetchType.EAGER
+import jakarta.persistence.FetchType.LAZY
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
@@ -14,7 +16,7 @@ class ClientEntity(
 
     @Id
     @Column(name = "id")
-    var id: UUID,
+    val id: UUID,
 
     @Column(name = "name")
     var name: String,
@@ -34,31 +36,22 @@ class ClientEntity(
     @Column(name = "salary")
     var salary: BigDecimal,
 
-    @Column(name = "street")
-    var street: String,
-
-    @Column(name = "district")
-    var district: String,
-
-    @Column(name = "city")
-    var city: String,
-
-    @Column(name = "state")
-    var state: String,
-
-    @Column(name = "zip_code")
-    var zipCode: String,
-
-    @Column(name = "number")
-    var number: String,
-
     @Column(name = "additional_information")
     var additionalInformation: String?,
 
+    @OneToMany(
+        fetch = LAZY,
+        cascade = [ALL],
+        orphanRemoval = true
+    )
+    @JoinColumn(name= "client_id")
+    @JsonManagedReference
+    var address: List<AddressEntity> = listOf(),
+
     @Column(name = "created_at")
-    var createdAt: LocalDateTime,
+    val createdAt: LocalDateTime,
 
     @Column(name = "updated_at")
-    var updatedAt: LocalDateTime? = LocalDateTime.now()
+    var updatedAt: LocalDateTime = LocalDateTime.now()
 
 )

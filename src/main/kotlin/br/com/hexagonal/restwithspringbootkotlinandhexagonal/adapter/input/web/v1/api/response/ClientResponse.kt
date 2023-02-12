@@ -16,7 +16,7 @@ data class ClientResponse(
     val email: String,
     val document: Document,
     val salary: BigDecimal,
-    val address: Address,
+    val address: List<Address>,
     @JsonInclude(value = NON_EMPTY)
     val additionalInformation: Map<String, String>,
     val createdAt: LocalDateTime,

@@ -1,10 +1,10 @@
 package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.service
 
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.errors.Errors
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.client.ViaCepClient
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.feign.viacep.converter.toDomain
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Address
-import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.errors.DomainErrors.INVALID_CEP_INTEGRATION
-import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.exceptions.ViaCepPortException
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.input.web.v1.api.exceptions.ViaCepPortException
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.port.output.ClientAddressPort
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -27,7 +27,7 @@ class ViaCepService(
                 }
         } catch (exception: Exception) {
             logger.error("Error searching address by zip code: [{}]", zipCode)
-            throw ViaCepPortException(INVALID_CEP_INTEGRATION)
+            throw ViaCepPortException(Errors.invalidCepIntegration(zipCode))
         }
     }
 }

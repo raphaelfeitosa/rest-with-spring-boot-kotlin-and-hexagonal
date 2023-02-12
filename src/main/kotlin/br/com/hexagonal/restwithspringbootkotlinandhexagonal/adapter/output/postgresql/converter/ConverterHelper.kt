@@ -1,7 +1,8 @@
 package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.postgresql.converter
 
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.postgresql.entity.AddressEntity
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.postgresql.entity.ClientEntity
-import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Address
+import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Client.Address
 import br.com.hexagonal.restwithspringbootkotlinandhexagonal.application.domain.Client
 import com.fasterxml.jackson.databind.ObjectMapper
 
@@ -13,16 +14,25 @@ fun Client.toEntity() = ClientEntity(
     documentNumber = this.document.number,
     documentType = this.document.type.name,
     salary = this.salary,
-    street = this.address!!.street!!,
-    district = this.address.district!!,
-    city = this.address.city!!,
-    state = this.address.state!!,
-    zipCode = this.address.zipCode!!,
-    number = this.address.number!!,
+    address = this.address!!.toEntity(),
     additionalInformation = this.additionalInformation!!.objectToJson(),
     createdAt = this.createdAt,
     updatedAt = this.updatedAt
 )
+
+private fun Set<Address>.toEntity(): MutableList<AddressEntity> =
+    this.map { it.toEntity() }.toMutableList()
+private fun Address.toEntity(): AddressEntity =
+    AddressEntity(
+        id = this.id,
+        street = this.street!!,
+        district = this.district!!,
+        city = this.city!!,
+        state = this.state!!,
+        zipCode = this.zipCode!!,
+        number = this.number!!,
+        clientId = this.clientId!!
+    )
 
 fun Client.toUpdateEntity(entity: ClientEntity): ClientEntity {
     entity.name = this.name
@@ -48,17 +58,24 @@ fun ClientEntity.toDomain() =
             type = enumValueOf(this.documentType)
         ),
         salary = this.salary,
-        address = Address(
-            street = this.street,
-            district = this.district,
-            city = this.city,
-            state = this.state,
-            zipCode = this.zipCode,
-            number = this.number,
-        ),
+        address = this.address.toDomain(),
         additionalInformation = this.additionalInformation!!.stringToMap(),
         createdAt = this.createdAt,
-        updatedAt = this.updatedAt!!
+        updatedAt = this.updatedAt
+    )
+
+private fun List<AddressEntity>.toDomain(): Set<Address> =
+    this.map { it.toDomain() }.toSet()
+
+private fun AddressEntity.toDomain(): Address =
+    Address(
+        id = this.id,
+        street = this.street,
+        district = this.district,
+        city = this.city,
+        state = this.state,
+        zipCode = this.zipCode,
+        number = this.number
     )
 
 private fun String.stringToMap() =

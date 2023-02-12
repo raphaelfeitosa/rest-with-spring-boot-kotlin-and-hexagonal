@@ -17,14 +17,14 @@ fun Client.toResponse() = ClientResponse(
         )
     },
     salary = this.salary,
-    address = with(this.address!!) {
+    address = this.address!!.map {
         ClientResponse.Address(
-            street = this.street!!,
-            district = this.district!!,
-            city = this.city!!,
-            state = this.state!!,
-            zipCode = this.zipCode!!,
-            number = this.number!!,
+            street = it.street!!,
+            district = it.district!!,
+            city = it.city!!,
+            state = it.state!!,
+            zipCode = it.zipCode!!,
+            number = it.number!!,
         )
     },
     additionalInformation = this.additionalInformation!!,
