@@ -3,8 +3,6 @@ package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.pos
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import jakarta.persistence.CascadeType.ALL
-import jakarta.persistence.CascadeType.REMOVE
-import jakarta.persistence.FetchType.EAGER
 import jakarta.persistence.FetchType.LAZY
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -47,6 +45,9 @@ class ClientEntity(
     @JoinColumn(name= "client_id")
     @JsonManagedReference
     var address: List<AddressEntity> = listOf(),
+
+    @Column(name = "active")
+    var active: Boolean = true,
 
     @Column(name = "created_at")
     val createdAt: LocalDateTime,

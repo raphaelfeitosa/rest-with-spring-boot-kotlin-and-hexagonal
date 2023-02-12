@@ -36,6 +36,9 @@ class AddressEntity(
     @ManyToOne
     @JoinColumn(name = "client_id", insertable = false, updatable = false)
     @JsonBackReference
-    val client: ClientEntity? = null
+    val client: ClientEntity? = null,
+
+    @Column(name = "active")
+    var active: Boolean = true
 
 )
