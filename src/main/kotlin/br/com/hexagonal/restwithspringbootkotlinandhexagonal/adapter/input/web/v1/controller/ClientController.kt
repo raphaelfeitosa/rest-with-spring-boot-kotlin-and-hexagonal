@@ -22,7 +22,9 @@ class ClientController(
     private val deleteClientUseCase: DeleteClientUseCase
 ) : ClientApi {
 
-    private val logger = LoggerFactory.getLogger(ClientController::class.java.name)
+    companion object {
+        private val logger = LoggerFactory.getLogger(ClientController::class.java.name)
+    }
 
     override fun create(createClientRequest: CreateClientRequest): ClientResponse {
         logger.info("Request received to create a new client: [{}].", createClientRequest)

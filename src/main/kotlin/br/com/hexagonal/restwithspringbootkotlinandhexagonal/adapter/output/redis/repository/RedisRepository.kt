@@ -1,8 +1,6 @@
 package br.com.hexagonal.restwithspringbootkotlinandhexagonal.adapter.output.redis.repository
 
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Lazy
 import org.springframework.data.redis.RedisConnectionFailureException
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Repository
@@ -13,7 +11,9 @@ class RedisRepository(
     private val redisTemplate: RedisTemplate<String, Any>
 ) : RedisRepositoryPort {
 
-    private val logger = LoggerFactory.getLogger(RedisRepository::class.java.name)
+    companion object {
+        private val logger = LoggerFactory.getLogger(RedisRepository::class.java.name)
+    }
 
     override fun put(key: String, value: Any, expiration: Duration) {
         try {
@@ -33,7 +33,7 @@ class RedisRepository(
             redisTemplate.opsForValue().get(key)
         } catch (exception: RedisConnectionFailureException) {
             logger.error(
-                "Timeout with Redis to get key: [{}].",
+                "Timeout with redis to get key: [{}].",
                 key,
                 exception
             )

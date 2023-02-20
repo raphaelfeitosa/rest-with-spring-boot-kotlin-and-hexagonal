@@ -19,7 +19,9 @@ class ClientRepositoryService(
     private val clientRepository: ClientRepository
 ) : ClientRepositoryPort {
 
-    private val logger = LoggerFactory.getLogger(ClientRepositoryService::class.java.name)
+    companion object {
+        private val logger = LoggerFactory.getLogger(ClientRepositoryService::class.java.name)
+    }
 
     override fun save(client: Client): Client {
         logger.info("Starting process to save a client: [{}], in DB.", client)

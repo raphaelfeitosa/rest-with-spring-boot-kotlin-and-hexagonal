@@ -13,7 +13,9 @@ class RedisRepositoryService(
     private val redisRepository: RedisRepository
 ) : CachePort {
 
-    private val logger = LoggerFactory.getLogger(RedisRepositoryService::class.java.name)
+    companion object {
+        private val logger = LoggerFactory.getLogger(RedisRepositoryService::class.java.name)
+    }
 
     override fun put(key: String, value: Any, expiration: Duration) {
         logger.info(

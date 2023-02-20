@@ -19,7 +19,9 @@ class CreateClientService(
     private val cacheInDays: Long
 ) : CreateClientUseCase {
 
-    private val logger = LoggerFactory.getLogger(CreateClientService::class.java.name)
+    companion object {
+        private val logger = LoggerFactory.getLogger(CreateClientService::class.java.name)
+    }
 
     private val cacheTtl = Duration.ofDays(cacheInDays)
 

@@ -11,7 +11,9 @@ class UpdateClientService(
     private val clientRepositoryPort: ClientRepositoryPort,
 ) : DeleteClientUseCase {
 
-    private val logger = LoggerFactory.getLogger(UpdateClientService::class.java.name)
+    companion object {
+        private val logger = LoggerFactory.getLogger(UpdateClientService::class.java.name)
+    }
 
     override fun execute(clientId: UUID) {
         logger.info("Starting service to delete a client with clientId: [{}].", clientId)

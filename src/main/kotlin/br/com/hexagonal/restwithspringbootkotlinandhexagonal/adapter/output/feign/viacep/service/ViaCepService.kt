@@ -14,7 +14,9 @@ class ViaCepService(
     private val viaCepClient: ViaCepClient
 ) : ClientAddressPort {
 
-    private val logger = LoggerFactory.getLogger(ViaCepService::class.java.name)
+    companion object {
+        private val logger = LoggerFactory.getLogger(ViaCepService::class.java.name)
+    }
 
     override fun getAddressClient(zipCode: String): Address {
         logger.info("Starting address search by zip code: [{}].", zipCode)
