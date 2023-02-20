@@ -20,6 +20,6 @@ import kotlin.reflect.KClass
 @Retention(AnnotationRetention.RUNTIME)
 annotation class CPForCNPJ(
     val message: String = "This field must have a valid CPF or CNPJ format",
-    val groups: Array<KClass<Any>> = [],
-    val payload: Array<KClass<Payload>> = []
+    val groups: Array<KClass<*>> = [],
+    val payload: Array<KClass<out Payload>> = []
 )

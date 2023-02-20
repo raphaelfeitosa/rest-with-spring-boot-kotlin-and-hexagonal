@@ -30,7 +30,7 @@ class ExistsDocumentNumberValidator(
     override fun isValid(documentNumber: String?, context: ConstraintValidatorContext?): Boolean {
         when {
             documentNumber != null ->
-                if (clientRepository.findByDocumentNumber(documentNumber).isPresent)
+                if (clientRepository.findByDocumentNumberAndActiveTrue(documentNumber).isPresent)
                     throw BusinessException(DOCUMENT_NUMBER_ALREADY_EXISTS)
         }
         return true

@@ -12,17 +12,20 @@ class FindClientService(
     private val clientRepositoryPort: ClientRepositoryPort,
 ) : FindClientUseCase {
 
-    private val logger = LoggerFactory.getLogger(FindClientUseCase::class.java.name)
+    companion object {
+        private val logger = LoggerFactory.getLogger(FindClientUseCase::class.java.name)
+    }
+
     override fun execute(): List<Client> {
         logger.info("Starting service to find all clients.")
-        return clientRepositoryPort.findAll().also {
+        return clientRepositoryPort.findAllAndActiveTrue().also {
             logger.info("Done service to find all clients.")
         }
     }
 
     override fun execute(clientId: UUID): Client {
         logger.info("Starting service to find a client by clientId: [{}].", clientId)
-        return clientRepositoryPort.findById(clientId).also {
+        return clientRepositoryPort.findByIdAndActiveTrue(clientId).also {
             logger.info("Done service to find a client: [{}].", it)
         }
     }

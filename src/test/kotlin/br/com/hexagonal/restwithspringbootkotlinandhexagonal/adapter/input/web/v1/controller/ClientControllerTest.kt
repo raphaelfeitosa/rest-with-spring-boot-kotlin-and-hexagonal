@@ -51,8 +51,10 @@ class ClientControllerTest {
                 assertEquals(createClientRequest.name, it.name)
                 assertEquals(createClientRequest.email, it.email)
                 assertEquals(createClientRequest.documentNumber, it.document.number)
-                assertEquals(createClientRequest.address!!.zipCode, it.address!!.zipCode)
-                assertEquals(createClientRequest.address!!.number, it.address!!.number)
+                assertEquals(
+                    createClientRequest.address!!.map { address -> address.zipCode },
+                    it.address!!.map { address -> address.zipCode }
+                )
             }
         )
     }

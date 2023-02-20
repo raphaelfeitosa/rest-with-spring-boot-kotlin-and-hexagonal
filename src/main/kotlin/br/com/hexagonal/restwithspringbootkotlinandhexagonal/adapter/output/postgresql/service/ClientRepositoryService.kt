@@ -16,57 +16,66 @@ import java.util.*
 
 @Service
 class ClientRepositoryService(
-    private val clientRepository: ClientRepository,
+    private val clientRepository: ClientRepository
 ) : ClientRepositoryPort {
 
-    private val logger = LoggerFactory.getLogger(ClientRepositoryService::class.java.name)
+    companion object {
+        private val logger = LoggerFactory.getLogger(ClientRepositoryService::class.java.name)
+    }
 
     override fun save(client: Client): Client {
         logger.info("Starting process to save a client: [{}], in DB.", client)
-        return clientRepository.save(
-            client.toEntity()
-        ).also {
-            logger.info("Done process to save a client: [{}] $it, in DB")
-        }.toDomain()
-
+        return clientRepository.save(client.toEntity())
+            .toDomain()
+            .also {
+                logger.info("Done process to save a client: [{}], in DB", it)
+            }
     }
 
     override fun update(client: Client): Client {
         logger.info("Starting process to update a client with clientId: [{}], in DB.", client.id)
         val entity = getClientById(client.id)
-        return clientRepository.save(
-            client.toUpdateEntity(entity)
-        ).also {
-            logger.info("Done process to update a client: [{}] $it, in DB")
-        }.toDomain()
+        return clientRepository.save(client.toUpdateEntity(entity))
+            .toDomain()
+            .also {
+                logger.info("Done process to update a client: [{}], in DB", it)
+            }
     }
 
-    override fun findAll(): List<Client> {
+    override fun findAllAndActiveTrue(): List<Client> {
         logger.info("Starting process to find find all clients in DB.")
-        return clientRepository.findAll()
+        return clientRepository.findAllAndActiveTrue()
+            .map { it.toDomain() }
             .also {
                 logger.info("Done process to find all clients in DB.")
-            }.map { it.toDomain() }
+            }
     }
 
-    override fun findById(clientId: UUID): Client {
+    override fun findByIdAndActiveTrue(clientId: UUID): Client {
         logger.info("Starting process to find a client with clientId: [{}], in DB.", clientId)
         return getClientById(clientId)
+            .toDomain()
             .also {
-                logger.info("Done process to find a client: [{}] $it, in DB")
-            }.toDomain()
+                logger.info("Done process to find a client: [{}], in DB", it)
+            }
     }
 
     override fun delete(clientId: UUID) {
         logger.info("Starting process to delete a client with clientId: [{}], in DB.", clientId)
         val entity = getClientById(clientId)
-        clientRepository.delete(entity).also {
-            logger.info("Done process to delete a client: [{}] $entity, in DB")
+
+        entity.active = false
+        entity.address.parallelStream().forEach {
+            it.active = false
         }
+
+        clientRepository.save(entity)
+        logger.info("Done process to delete a client: [{}], in DB", entity)
+
     }
 
     private fun getClientById(clientId: UUID): ClientEntity =
-        clientRepository.findById(clientId).map { it }
+        clientRepository.findByIdAndActiveTrue(clientId).map { it }
             .orElseThrow { NotFoundException(RESOURCE_NOT_FOUND) }
 
 }
