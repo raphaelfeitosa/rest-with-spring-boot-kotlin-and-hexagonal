@@ -20,6 +20,7 @@
 		<easy-random-core.version>5.0.0</easy-random-core.version>
 		<postgresql.version>42.5.1</postgresql.version>
 		<flyway.version>9.3.0</flyway.version>
+		<redis.version>3.0.2</redis.version>
 		<sonar.exclusions>
 			**/RestWithSpringBootKotlinAndHexagonalApplication.kt
 			**/request/**,
@@ -105,6 +106,16 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<version>${redis.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>4.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.flywaydb</groupId>
