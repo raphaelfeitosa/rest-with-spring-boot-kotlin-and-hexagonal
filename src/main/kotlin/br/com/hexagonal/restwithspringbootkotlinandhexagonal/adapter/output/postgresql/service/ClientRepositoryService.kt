@@ -25,21 +25,18 @@ class ClientRepositoryService(
 
     override fun save(client: Client): Client {
         logger.info("Starting process to save a client: [{}], in DB.", client)
-        return clientRepository.save(client.toEntity())
-            .toDomain()
-            .also {
-                logger.info("Done process to save a client: [{}], in DB", it)
-            }
+        val clientEntity = client.toEntity()
+        clientRepository.save(clientEntity)
+        logger.info("Done process to save a client: [{}], in DB", client)
+        return clientEntity.toDomain()
     }
 
     override fun update(client: Client): Client {
         logger.info("Starting process to update a client with clientId: [{}], in DB.", client.id)
-        val entity = getClientById(client.id)
-        return clientRepository.save(client.toUpdateEntity(entity))
-            .toDomain()
-            .also {
-                logger.info("Done process to update a client: [{}], in DB", it)
-            }
+        val clientEntity = getClientById(client.id)
+        clientRepository.save(client.toUpdateEntity(clientEntity))
+        logger.info("Done process to update a client: [{}], in DB", client)
+        return clientEntity.toDomain()
     }
 
     override fun findAllAndActiveTrue(): List<Client> {
