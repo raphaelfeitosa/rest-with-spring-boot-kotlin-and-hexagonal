@@ -1,13 +1,18 @@
 version: '3.3'
 services:
   db:
+    container_name: db
     image: postgres
     ports:
-      - "5432:5432"
+      - "15432:5432"
     environment:
+      POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: proposalcard
+    restart: always
 
   pgadmin:
+    container_name: pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
@@ -16,16 +21,20 @@ services:
       - "16543:80"
     depends_on:
       - db
+    restart: always
 
   wiremock:
+    container_name: wiremock
     image: duberton/wiremock:1.0
     ports:
       - "9002:8080"
     volumes:
       - ./mocks/__files:/home/wiremock/__files
       - ./mocks/mappings:/home/wiremock/mappings
+    restart: always
 
   localstack:
+    container_name: localstack
     build: ./infrastructure
     ports:
       - "4575:4575"
@@ -45,7 +54,36 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
 
   redis:
+    container_name: redis
     image: redis
     command: redis-server
     ports:
       - "6379:6379"
+    restart: always
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.42.0
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-volume:/etc/prometheus/
+    network_mode: bridge
+    ports:
+      - "9090:9090"
+    restart: always
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:9.3.8
+    volumes:
+      - grafana-volume:/var/lib/grafana
+    network_mode: bridge
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    restart: always
+
+volumes:
+  grafana-volume:
+  prometheus-volume:
