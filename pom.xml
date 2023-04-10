@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.0-M4</version>
+		<version>3.0.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.hexagonal</groupId>
@@ -15,12 +15,12 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
-		<kotlin.version>1.7.10</kotlin.version>
-		<spring-cloud.version>2022.0.0-M4</spring-cloud.version>
+		<kotlin.version>1.8.20</kotlin.version>
+		<spring-cloud.version>2022.0.2</spring-cloud.version>
 		<easy-random-core.version>5.0.0</easy-random-core.version>
-		<postgresql.version>42.5.1</postgresql.version>
-		<flyway.version>9.3.0</flyway.version>
-		<redis.version>3.0.2</redis.version>
+		<postgresql.version>42.6.0</postgresql.version>
+		<flyway.version>9.16.3</flyway.version>
+		<redis.version>3.0.5</redis.version>
 		<sonar.exclusions>
 			**/RestWithSpringBootKotlinAndHexagonalApplication.kt
 			**/request/**,
