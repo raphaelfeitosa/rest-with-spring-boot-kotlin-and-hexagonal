@@ -1,0 +1,56 @@
+version: '3.3'
+services:
+  db:
+    container_name: db
+    image: postgres
+    ports:
+      - "15432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: proposal
+    restart: always
+    networks:
+      - docker-network
+
+  redis:
+    container_name: redis
+    image: redis
+    command: redis-server
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - docker-network
+
+  proposal-api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: proposal-api
+    image: raphaelfeitosa/proposal-api:latest
+    ports:
+      - "80:8082"
+    environment:
+      APPLICATION_PORT: 8082
+      DB_USER: admin
+      DB_PASSWORD: password
+      DB_HOST: db
+      DB_PORT: 5432
+      REDIS_HOST: redis
+      API_VIA_CEP: https://viacep.com.br
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - docker-network
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+        reservations:
+          memory: 700M
+
+networks:
+  docker-network:
+    driver: bridge
